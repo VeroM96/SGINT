@@ -1,0 +1,57 @@
+#for values see zharova et al 2001; seagrass_different_parameters.pptx
+#photosynthetic growth
+grow_s: 0.016      #maximum relative growth rate [d^-1]    
+I_k20: 120.        #saturation irradiance [W/m²]
+I_c20: 9.          #compenstation irradiance at 20 degC [W/m²]
+t_Ic: 1.17         #temperature coefficient for compensation irradiance
+t_Ik: 1.04         #temperature coefficient for saturation irradiance
+
+k0_ph: 0.05        #function value at T = 0 degC [d^-1]
+km_ph: 0.00001     #function value at T = T_m [d^-1]
+t_opt_ph: 16       #optimal temperature for photosynthetic growth [degC]
+t_max_ph: 29       #maximum temperature for photosynthetic growth [degC]
+stt_ph: 2.0        #controlled shape of function for relative growth rate
+loss_s: 0.009      #leaf mortality [d^-1]
+t_loss: 1.05       #temperature coefficient for leaf mortality
+
+tdrymin: 4.5       #minimum time for dry period [h] per 12 hours <= 12!
+tdrymax: 9         #maximum time for dry period [h] per 12 hours <= 12!
+tdrya: 0.2         #rate coefficient for dry period t<tdrymin 
+tdryb: 0.5         #rate coefficient for dry period t>tdrymax
+sig_s: 0.0125      #maximum single leaf biomass   
+
+#recruitment
+grow_n: 0.04       #maximum relative recruitment rate [d^-1]
+k0_pr: 0.02        #function value at T = 0 degC [d^-1]
+km_pr: 0.00001     #function value at T = T_m [d^-1]
+t_opt_pr: 18       #optimal temperature for recruitment [degC]
+t_max_pr: 20       #maximum temperature for recruitment [degC]
+stt_pr: 2.5        #controlled shape of function for relative recruitment rate
+sig_ag: 45         #above ground biomass above which no new shoots are produced [gC m^-2]
+eps: 4.7e-3        #half-saturated constant for below ground biomass [gC m^-2]
+loss_n: 0.01       #shoot loss rate [d^-1]
+
+d_loss: 260        #day of year at which aging of leaves increses shoot loss rate [d] #august
+d_grow: 100        #day of year at which recruitment starts [d] #march
+d_loss_r: 30       #steepness of curve for loss rate of below ground biomass [d] (how fast loss rate increases)
+lmrv: 0.2          #leaf mass removal via sloughing [d^-1 per (m/s) wind speed]
+
+#below ground growth
+k_rs: 0.4          #fraction of growth that is allocated to below ground growth k_R:S 
+r_upr: 0.001       #below ground biomass of plant lost due to uprooting [gC]
+loss_r: 0.005      #loss rate of below ground biomass [d^-1]
+
+#for parallel running
+a_ch: 20           #conversion factor from gC to height [m gC^-1]
+h0: 0.02           #minimum height of seagrass canopy [m]
+sgint_dt: 7        #time step for sgint model [d]
+
+#light attenuation for calculating mean values as input
+k_w: 1.7           #light extinction coefficient in water [m^-1]
+k_sed: 0.035       #light extinction due to sediment [g^-1]
+
+#fractions of sediment loss converted to POC 
+f_exp_ag: 0.4      #fraction of above ground biomass lost to POC 
+f_exp_bg: 0.03     #fraction of below ground biomass lost to POC 
+id_agPOC: 5        #index of above ground POC in sediment fractions
+id_bgPOC: 6        #index of below ground POC in sediment fractions
