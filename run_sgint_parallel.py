@@ -24,7 +24,7 @@ nfiles = len(glob.glob(f'{runpat}/outputs/local_to_global*'))
 #### FUNCTIONS #############################
 #write output to veg_ .gr3 files
 def write_output_to_gr3(filename, updated_veg):
-    with open(f'{inpat}/veg_N.gr3', 'r') as fin, open(filename, 'w') as fout:
+    with open(f'{inpat}/sav_N.gr3', 'r') as fin, open(filename, 'w') as fout:
         # Copy header
         fin.readline()  # skip title
         print(f'Writing output to {filename.split("/")[-1]}')   
@@ -67,16 +67,16 @@ inpat =  runpat
 
 #copy input veg_N.gr3 to output folder
 if step == 1:
-    os.system(f'cp {inpat}/veg_N.gr3 {outpat}/veg_N_0.gr3')
-    os.system(f'cp {inpat}/veg_RB.gr3 {outpat}/veg_RB_0.gr3')
-    os.system(f'cp {inpat}/veg_LB.gr3 {outpat}/veg_LB_0.gr3')
-    os.system(f'cp {inpat}/veg_h.gr3 {outpat}/veg_h_0.gr3')
+    os.system(f'cp {inpat}/sav_N.gr3 {outpat}/sav_N_0.gr3')
+    os.system(f'cp {inpat}/sav_RB.gr3 {outpat}/sav_RB_0.gr3')
+    os.system(f'cp {inpat}/sav_LB.gr3 {outpat}/sav_LB_0.gr3')
+    os.system(f'cp {inpat}/sav_h.gr3 {outpat}/sav_h_0.gr3')
 
 #### INITIALIZATION ############################  
 
-LB = read_input_veg(f'{outpat}/veg_LB_{step-1}.gr3')
-RB = read_input_veg(f'{outpat}/veg_RB_{step-1}.gr3')
-N = read_input_veg(f'{outpat}/veg_N_{step-1}.gr3')
+LB = read_input_veg(f'{outpat}/sav_LB_{step-1}.gr3')
+RB = read_input_veg(f'{outpat}/sav_RB_{step-1}.gr3')
+N = read_input_veg(f'{outpat}/sav_N_{step-1}.gr3')
 
 updated_LB = np.zeros_like(LB)
 updated_RB = np.zeros_like(RB)
@@ -138,12 +138,12 @@ for global_nodes, updated_LB_local, updated_N_local, updated_RB_local in results
     updated_RB[global_nodes] = updated_RB_local
     updated_N[global_nodes] = updated_N_local
 
-write_output_to_gr3(f'{outpat}/veg_LB_{step}.gr3', updated_LB)
-write_output_to_gr3(f'{outpat}/veg_RB_{step}.gr3', updated_RB)
-write_output_to_gr3(f'{outpat}/veg_N_{step}.gr3', updated_N)
-write_output_to_gr3(f'{outpat}/veg_h_{step}.gr3', updated_LB*a_ch)
+write_output_to_gr3(f'{outpat}/sav_LB_{step}.gr3', updated_LB)
+write_output_to_gr3(f'{outpat}/sav_RB_{step}.gr3', updated_RB)
+write_output_to_gr3(f'{outpat}/sav_N_{step}.gr3', updated_N)
+write_output_to_gr3(f'{outpat}/sav_h_{step}.gr3', updated_LB*a_ch)
 
-os.system(f'cp {outpat}/veg_N_{step}.gr3 {inpat}/veg_N.gr3')
-os.system(f'cp {outpat}/veg_RB_{step}.gr3 {inpat}/veg_RB.gr3')
-os.system(f'cp {outpat}/veg_LB_{step}.gr3 {inpat}/veg_LB.gr3')
-os.system(f'cp {outpat}/veg_h_{step}.gr3 {inpat}/veg_h.gr3')
+os.system(f'cp {outpat}/sav_N_{step}.gr3 {inpat}/sav_N.gr3')
+os.system(f'cp {outpat}/sav_RB_{step}.gr3 {inpat}/sav_RB.gr3')
+os.system(f'cp {outpat}/sav_LB_{step}.gr3 {inpat}/sav_LB.gr3')
+os.system(f'cp {outpat}/sav_h_{step}.gr3 {inpat}/sav_h.gr3')

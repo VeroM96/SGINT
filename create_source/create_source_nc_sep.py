@@ -247,10 +247,10 @@ triArea = np.abs((x[tri[:, 0]] * (y[tri[:, 1]] - y[tri[:, 2]]) +
 if ts > 0:
 
     #read seagrass leaf data from file
-    _,_,LB0 = read_gr3_file(runpat + f'/outputs/week_mean/veg_LB_{ts-1}.gr3',read_tri=False) #gC
-    _,_,N0 = read_gr3_file(runpat + f'/outputs/week_mean/veg_N_{ts-1}.gr3',read_tri=False) #shoots/m^2
-    _,_,LB1 = read_gr3_file(runpat + f'/outputs/week_mean/veg_LB_{ts}.gr3',read_tri=False)
-    _,_,N1 = read_gr3_file(runpat + f'/outputs/week_mean/veg_N_{ts}.gr3',read_tri=False)
+    _,_,LB0 = read_gr3_file(runpat + f'/outputs/week_mean/sav_LB_{ts-1}.gr3',read_tri=False) #gC
+    _,_,N0 = read_gr3_file(runpat + f'/outputs/week_mean/sav_N_{ts-1}.gr3',read_tri=False) #shoots/m^2
+    _,_,LB1 = read_gr3_file(runpat + f'/outputs/week_mean/sav_LB_{ts}.gr3',read_tri=False)
+    _,_,N1 = read_gr3_file(runpat + f'/outputs/week_mean/sav_N_{ts}.gr3',read_tri=False)
     diff = LB0*N0 - LB1*N1 # positive -> biomass lost
     #reshape to element shape
     elem_diff = np.mean(diff[tri], axis=1)*f_exp #gC/m^2, f_exp of leaf NPP is exported from meadow as DOC & POC

@@ -117,8 +117,8 @@ triArea = np.abs((x[tri[:, 0]] * (y[tri[:, 1]] - y[tri[:, 2]]) +
 ###2. calculate POC from roots to input into sediment source
 if ts > 0:
     #read seagrass leaf data from file
-    _,_,RB0 = read_gr3_file(runpat + f'/outputs/week_mean/veg_RB_{ts-1}.gr3',read_tri=False) #gC
-    _,_,RB1 = read_gr3_file(runpat + f'/outputs/week_mean/veg_RB_{ts}.gr3',read_tri=False)
+    _,_,RB0 = read_gr3_file(runpat + f'/outputs/week_mean/sav_RB_{ts-1}.gr3',read_tri=False) #gC
+    _,_,RB1 = read_gr3_file(runpat + f'/outputs/week_mean/sav_RB_{ts}.gr3',read_tri=False)
 
     diff = RB0 - RB1 # positive -> biomass lost
     

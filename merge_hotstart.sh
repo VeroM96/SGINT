@@ -19,6 +19,18 @@ export LD_LIBRARY_PATH="/sw/spack-levante/mambaforge-22.9.0-2-Linux-x86_64-kptnc
 
 #read arguments
 ver=$1 #SGINT step; starting from 1 after 
+#check for arguments, else stop script
+if [ -z "$ver" ]
+then
+  echo "No SGINT step argument supplied, exiting"
+  exit 1
+fi
+
+#check if seagrass files are in folder
+if [ ! -f sav_N.gr3 ] || [ ! -f sav_RB.gr3 ] || [ ! -f sav_LB.gr3 ] || [ ! -f sav_h.gr3 ] 
+then
+  echo "Seagrass files for step $ver not found, exiting"
+  exit 1
 
 #define important directories
 this_dir=$PWD
