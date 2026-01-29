@@ -18,7 +18,7 @@ function creating weekly averaged values for wind stress, water temperature, inn
 ### Folder structure in SCHISM run:
 ```
 runpat
-├─ sgint.yaml
+├─ sgint.yaml (parameter input file for SGINT)
 ├─ veg_*.gr3 (used for SCHISM input)
 ├─ restart_run.sh (for submitting the model workflow to the cluster)
 ├─ merge_hotstart.sh (batch script calling sgint functions during model iterations)
