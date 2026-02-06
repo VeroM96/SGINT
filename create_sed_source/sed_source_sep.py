@@ -15,7 +15,6 @@ idsed = params['id_bgPOC']  # index for water column sediment fraction (AG bioma
 f_exp = params['f_exp_bg']  # fraction of above ground biomass lost to POC
 
 #### FUNCTIONS #############################
-idsed = 6  # index for bottom sediment fraction
 ## DO NOT RUN THIS SCRIPT DIRECTLY, IT IS PART OF A WORKFLOW
 #If you run this script directly, it will overwrite the sediment fractions in the hotstart file, whithout keeping the original values.
 # It is used to create an updated sediment source file for the sediment model.

@@ -59,29 +59,42 @@ def process_file(fnum):
 
     #take last n_steps for mean calculation
     mean_temp = np.mean(np.mean(temp[-n_steps:,:,:], axis=0), axis=1)
+    if np.isnan(mean_temp).any():
+        exit(f"Error run_week_mean_parallel.py: NaN values found in mean_temp for file {fname}")
     mean_dry = np.sum(dry[-n_steps:]*dt, axis=0)/n_m2 /3600 # convert to hours
+    if np.isnan(mean_dry).any():
+        exit(f"Error run_week_mean_parallel.py: NaN values found in mean_dry for file {fname}")
 
     #calculate light attenuation and store mean light intensity for lowest layer
     #light attenuation 
 
     dz = zcor[:,:,1:]-zcor[:,:,:-1]
-    if dz.any()< 0:
-        print(dz)
+    #check for negative or nan values in dz and set them to 0 -> occurs in shallow areas with wetting and drying, but should not affect light attenuation significantly as these layers are very thin
+    if dz.any()< 0 or np.isnan(dz).any():
+        print('dz <0 or nan -> set to 0')
+        dz[np.isnan(dz)] = 0.0
+        dz[dz < 0] = 0.0
+
     i_n = rad #initial light at surface
     for i in range(dz.shape[2]-1,-1,-1):
         kw = k_w+k_sed*tsc[:,:,i] #total attenuation coefficient
         i_wc = i_n *np.exp(-kw*dz[:,:,i]/2)#calculate light at center of layer   
-        i_n = i_wc * np.exp(-kw*dz[:,:,i]) #calculate light at bottom of layer
+        i_n = i_n * np.exp(-kw*dz[:,:,i]) #calculate light at bottom of layer
     mean_rad = np.mean(i_wc[-n_steps:,:], axis=0)
+    if np.isnan(mean_rad).any():
+        exit(f"Error run_week_mean_parallel.py: NaN values found in mean_rad for file {fname}")
     #mean depth
-    mean_depth = np.mean(np.sum(dz[-n_steps:,:], axis=0), axis=1)  # average depth over the last n_steps
+    dep_tot = np.nansum(dz,axis=2)
+    mean_depth = np.mean(dep_tot[-n_steps:,:], axis=0)  # average depth over the last n_steps
+    if np.isnan(mean_depth).any():
+        exit(f"Error run_week_mean_parallel.py: NaN values found in mean_depth for file {fname}")
     #wind extinction with depth
     k_wind = 1.2 #wind effect attenuation with depth
-    wind_speed = np.sqrt(wind[:,:,1]**2+wind[::,:,0]**2)
-    if np.any(zcor[:,:,-1]-zcor[:,:,1] < 0):
-        print(zcor)
-    wind_bot = wind_speed/10 * np.exp(-k_wind* (zcor[:,:,-1]-zcor[:,:,1]))#wind effect at bottom
+    wind_speed = np.sqrt(wind[:,:,1]**2+wind[:,:,0]**2)
+    wind_bot = wind_speed/10 * np.exp(-k_wind* dep_tot)#wind effect at bottom
     mean_wind = np.mean(wind_bot[-n_steps:,:], axis=0)
+    if np.isnan(mean_wind).any():
+        exit(f"Error run_week_mean_parallel.py: NaN values found in mean_wind for file {fname}")
 
 
     with h5py.File(f'{outdir}/mean_{fnum:06d}_{ts}.h5', 'w') as f:
